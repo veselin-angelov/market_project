@@ -30,3 +30,4 @@ def register():
 
         return redirect('/')
 
+
