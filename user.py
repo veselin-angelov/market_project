@@ -12,8 +12,8 @@ class User(UserMixin):
 
     def create(self):
         with DB() as db:
-            values = (self.email, self.password, self.name = name, 
-                self.address = address, self.mobile = mobile)
+            values = (self.email, self.password, self.name, 
+                self.address, self.mobile)
             db.execute('''
                 INSERT INTO users (email, password, name, address, mobile)
                 VALUES (?, ?, ?, ?, ?)''', values)

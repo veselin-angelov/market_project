@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style/register.css">
+    <link rel="stylesheet" href="style/style.css">
+    <title>Login</title>
+</head>
+<body>
+    <!-- navbar -->
+    <ul class="navbar_ul">
+        <li class="navbar_li"><a href="index.html">Home</a></li>
+        <li class="navbar_li"><a class="active" href="login.html">Login</a></li>
+        <li class="navbar_li"><a href="register.html">Register</a></liclass="navbar_li">
+        <li class="navbar_li"><a href="#about">About</a></li>
+    </ul>
+    <!-- end -->
+    <div class="user">
+        <form class="form" action="/login" method="POST">
+            
+            <div class="form__group">
+                <input name="email" type="email" placeholder="Email" class="form__input" />
+            </div>
+            
+            <div class="form__group">
+                <input name="password" type="password" placeholder="Password" class="form__input" />
+            </div>
+            
+            <button class="btn" type="submit">Login</button>
+        </form>
+    </div>
+</body>
+</html>
