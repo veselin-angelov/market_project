@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS users
     (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         email TEXT UNIQUE NOT NULL,
-        password TEXT NOT NULL
+        password TEXT NOT NULL,
         name TEXT NOT NULL,
         address TEXT NOT NULL,
         mobile INTEGER NOT NULL
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS users
 conn.commit()
 
 class DB:
-    def __connect__(self):
+    def __enter__(self):
         self.conn = sqlite3.connect(DB_NAME)
         return self.conn.cursor()
 
