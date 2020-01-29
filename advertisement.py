@@ -18,6 +18,13 @@ class Advertisement:
             return [Advertisement(*row) for row in rows]
 
     @staticmethod
+    def bought_ads(id):
+        with DB() as db:
+            values = (id,)
+            rows = db.execute('SELECT * FROM advertisements WHERE buyer_id = ? AND active = 0', values).fetchall()
+            return [Advertisement(*row) for row in rows]
+
+    @staticmethod
     def find(id):
         with DB() as db:
             row = db.execute(
@@ -42,7 +49,7 @@ class Advertisement:
                 'SELECT name FROM users WHERE id = ?',
                 (seller_id,)
             ).fetchone()
-            return name
+            return name[0]
 
     @staticmethod
     def buyer_name_by_id(buyer_id):
@@ -51,7 +58,7 @@ class Advertisement:
                 'SELECT name FROM users WHERE id = ?',
                 (buyer_id,)
             ).fetchone()
-            return name
+            return name[0]
 
 
     def create(self):
@@ -64,7 +71,7 @@ class Advertisement:
 
     def buy(self, buyer_id):
         with DB() as db:
-            values = (self.id, buyer_id)
+            values = (buyer_id, self.id)
             db.execute('''UPDATE advertisements SET active = 0, buyer_id = ? WHERE id = ?''', values)
             self.active = 0
             self.buyer_id = buyer_id

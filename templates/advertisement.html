@@ -23,20 +23,22 @@
     <h2>Desc: {{ advertisement.description }}</h2>
     <h3>Price: {{ advertisement.price }}</h3>
     <h4>Date: {{ advertisement.date }}</h4>
-    {% if advertisement.active == 1 %}
-    <h5>For sale</h5>
+    {% if token and advertisement.active == 1 and advertisement.seller_id != user_id %}
+    <form action="/{{ advertisement.id }}/buy" method="post">
+        <button type="submit">Buy</button>
+    </form>
     {% endif %}
     {% if advertisement.active == 0 %}
     <h5>Buyer: {{ advertisement.buyer_name_by_id(advertisement.buyer_id) }}</h5>
     {% endif %}
     <h5>Seller: {{ advertisement.seller_name_by_id(advertisement.seller_id) }}</h5>
 
-    
-
-
-
-
-    
+    {% if advertisement.seller_id == user_id %}
+    <form action="/{{ advertisement.id }}/delete" method="post">
+        <button type="submit">Delete ad</button>
+    </form>
+    <a href="/{{ advertisement.id }}/edit">Edit post</a><br/><br/>
+    {% endif %}    
 
 </body>
 </html>

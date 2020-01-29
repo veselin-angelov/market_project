@@ -1,0 +1,16 @@
+<form action="{{ advertisement.id }}/edit" method="post">
+  <div class="form__group">
+    <input name="title" type="text" placeholder="{{ advertisement.title }}" class="form__input" />
+  </div>
+
+  <div class="form__group">
+      <textarea name="description" placeholder="{{ advertisement.description }}" rows="4" cols="50"></textarea>
+
+  <div class="form__group">
+      <input name="price" type="text" placeholder="{{ advertisement.price }}" class="form__input" />
+  </div>
+      
+  <div class="form__group">
+      <input name="date" type="date" min="new Date().toISOString().split('T')[0]">
+  </div>
+</form>

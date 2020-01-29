@@ -7,7 +7,7 @@ from itsdangerous import (
     SignatureExpired
     )
 
-SECRET_KEY = 'q4t7w!z%C*F-J@/A?D'
+SECRET_KEY = "SxOW8IKSGVShQD6BXtQzMA"
 
 class User:
     def __init__(self, id, email, password, name, address, mobile):

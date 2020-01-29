@@ -43,3 +43,7 @@ h1 {
     text-align: center;
     padding-top: 100px;
 }
+
+.logout {
+    float: right;
+}

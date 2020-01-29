@@ -6,25 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- <link rel="stylesheet" href="style/style.css"> -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <title>Index</title>
+    <title>Profile</title>
 </head>
 <body>
     <!-- navbar -->
     <ul class="navbar_ul">
-        <li class="navbar_li"><a class="active" href="/">Home</a></li>
-        {% if not token %}
-        <li class="navbar_li"><a href="/login">Login</a></li>
-        <li class="navbar_li"><a href="/register">Register</a></li>
-        {% endif %}
-        {% if token %}
-        <li class="navbar_li"><a href="/profile">My profile</a></li>
+        <li class="navbar_li"><a href="/">Home</a></li>
+        <li class="navbar_li"><a class="active" href="/profile">My profile</a></li>
         <li class="navbar_li"><a href="/new">New ad</a></li>
-        <li class="navbar_li logout"><a href="/logout">Log out</a></li>
-        {% endif %}
         <li class="navbar_li"><a href="#about">About</a></li>
+        <li class="navbar_li logout"><a href="/logout">Log out</a></li>
     </ul>
     <!-- end -->
-    <h1>Welcome</h1>
+    <h1>Welcome to your profile</h1>
 
     {% for advertisement in advertisements %}
     <a href="/{{ advertisement.id }}">Title: {{ advertisement.title }} Seller: {{ advertisement.seller_name_by_id(advertisement.seller_id) }}</a>

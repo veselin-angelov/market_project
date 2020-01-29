@@ -19,10 +19,10 @@
             request.onload = function() {
                 var token = JSON.parse(request.responseText).token;
                 if (token != null) {
-                document.cookie = 'token=' + token + ';';
-                document.location = '/';
+                    document.cookie = 'token=' + token + ';';
+                    document.location = '/';
                 } else {
-                alert('No can do');
+                    alert('No can do');
                 }
 
             }
