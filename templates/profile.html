@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- <link rel="stylesheet" href="style/style.css"> -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <title>Profile</title>
 </head>
@@ -18,11 +17,11 @@
         <li class="navbar_li logout"><a href="/logout">Log out</a></li>
     </ul>
     <!-- end -->
-    <h1>Welcome to your profile</h1>
+    <h1>Welcome to your profile, {{ username }}</h1>
 
     {% for advertisement in advertisements %}
-    <a href="/{{ advertisement.id }}">Title: {{ advertisement.title }} Seller: {{ advertisement.seller_name_by_id(advertisement.seller_id) }}</a>
-    <br/>
+        <a href="/{{ advertisement.id }}">Title: {{ advertisement.title }} Buyer {{ advertisement.buyer_name_by_id(advertisement.buyer_id) }} </a>
+        <br/>
     {% endfor %}
 
 </body>

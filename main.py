@@ -1,8 +1,7 @@
 from functools import wraps
 
 from flask import Flask
-from flask import render_template, request, redirect, url_for, jsonify, session, g, make_response
-# from flask_login import login_required
+from flask import render_template, request, redirect, url_for, jsonify, session, make_response
 from user import User
 import json
 
@@ -23,24 +22,28 @@ def require_login(func):
 @app.route('/')
 def index():
     token = request.cookies.get('token')
-    return render_template('index.html', advertisements=Advertisement.all(), token=token)
+    user_id = session.get("user_id")
+    if token:
+        username = User.find_name_by_id(user_id)
+        return render_template('index.html', advertisements=Advertisement.all(), token=token, username=username)
+    else:
+        return render_template('index.html', advertisements=Advertisement.all(), token=token)
 
 @app.route('/profile')
 def profile():
     token = request.cookies.get('token')
     if token:
         user_id = session.get("user_id")
-        return render_template('profile.html', advertisements=Advertisement.bought_ads(user_id))
+        username = User.find_name_by_id(user_id)
+        return render_template('profile.html', advertisements=Advertisement.sold_ads(user_id), username=username)
     else:
         return redirect('/login')
 
 @app.route('/new', methods=['GET', 'POST'])
-@require_login
 def new_ad():
     if request.method == 'GET':
         return render_template('new_ad.html')
     elif request.method == 'POST':
-        # if session.get("user_id", None) is not None:
         user_id = session.get("user_id")
         values = (
             None,
@@ -62,7 +65,6 @@ def edit_ad(id):
     if request.method == "GET":
         return render_template('edit_ad.html', advertisement=advertisement)
     elif request.method == "POST":
-        user_id = session.get("user_id")
         advertisement.title = request.form['title']
         advertisement.description = request.form['description']
         advertisement.price = request.form['price']
@@ -76,8 +78,11 @@ def show_advertisement(id):
     token = request.cookies.get('token')
     advertisement = Advertisement.find(id)
     user_id = session.get("user_id")
-
-    return render_template('advertisement.html', advertisement=advertisement, token=token, user_id=user_id)
+    if advertisement.active == 0:
+        buyer = Advertisement.buyer_info_by_id(advertisement.buyer_id)
+        return render_template('advertisement.html', advertisement=advertisement, token=token, user_id=user_id, buyer=buyer)
+    else:
+        return render_template('advertisement.html', advertisement=advertisement, token=token, user_id=user_id)
 
 @app.route('/<int:id>/delete', methods=['POST'])
 def delete_ad(id):
@@ -124,12 +129,10 @@ def login():
         if request.method == 'GET':
             return render_template('login.html')
         elif request.method == 'POST':
-            # session.pop('user', None)
             data = json.loads(request.data.decode('ascii'))
             email = data['email']
             password = data['password']
             user = User.find(email)
-            # cookie = user.cookie()
             if not user or not user.verifyPassword(password):
                 return jsonify({'token': None})
             token = user.generateToken()
@@ -147,5 +150,3 @@ def logout():
 
 if __name__ == '__main__':
     app.run(debug=True)      
-
-

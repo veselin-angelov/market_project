@@ -33,12 +33,18 @@
     {% endif %}
     <h5>Seller: {{ advertisement.seller_name_by_id(advertisement.seller_id) }}</h5>
 
-    {% if advertisement.seller_id == user_id %}
+    {% if advertisement.seller_id == user_id and advertisement.active == 1 %}
     <form action="/{{ advertisement.id }}/delete" method="post">
         <button type="submit">Delete ad</button>
     </form>
     <a href="/{{ advertisement.id }}/edit">Edit post</a><br/><br/>
-    {% endif %}    
+    {% endif %}
+    {% if advertisement.seller_id == user_id and advertisement.active == 0 %}
+        <h5>Name: {{ buyer.name }}</h5>
+        <h5>Address: {{ buyer.address }}</h5>
+        <h5>Mobile: {{ buyer.mobile }}</h5>
+    {% endif %}
+
 
 </body>
 </html>

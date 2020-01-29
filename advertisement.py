@@ -1,4 +1,5 @@
 from database import DB
+from user import User
 
 class Advertisement:
     def __init__(self, id, title, description, price, date, active, buyer_id, seller_id):
@@ -18,10 +19,10 @@ class Advertisement:
             return [Advertisement(*row) for row in rows]
 
     @staticmethod
-    def bought_ads(id):
+    def sold_ads(id):
         with DB() as db:
             values = (id,)
-            rows = db.execute('SELECT * FROM advertisements WHERE buyer_id = ? AND active = 0', values).fetchall()
+            rows = db.execute('SELECT * FROM advertisements WHERE seller_id = ? AND active = 0', values).fetchall()
             return [Advertisement(*row) for row in rows]
 
     @staticmethod
@@ -60,6 +61,15 @@ class Advertisement:
             ).fetchone()
             return name[0]
 
+    @staticmethod
+    def buyer_info_by_id(buyer_id):
+        with DB() as db:
+            row = db.execute(
+                'SELECT * FROM users WHERE id = ?',
+                (buyer_id,)
+            ).fetchone()
+            return User(*row)       
+
 
     def create(self):
         with DB() as db:
@@ -80,3 +90,18 @@ class Advertisement:
     def delete(self):
         with DB() as db:
             db.execute('DELETE FROM advertisements WHERE id = ?', (self.id,))
+
+    def save(self):
+        with DB() as db:
+            values = (
+                self.title,
+                self.description,
+                self.price,
+                self.date,
+                self.id
+            )
+            db.execute(
+                '''UPDATE advertisements
+                SET title = ?, description = ?, price = ?, date = ?
+                WHERE id = ?''', values)
+            return self

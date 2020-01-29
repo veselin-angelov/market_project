@@ -23,18 +23,18 @@
         <form class="form" action="/new" method="POST">
             
             <div class="form__group">
-                <input name="title" type="text" placeholder="Title" class="form__input" />
+                <input name="title" type="text" placeholder="Title" class="form__input title" />
             </div>
             
             <div class="form__group">
                 <textarea name="description" placeholder="Description" rows="4" cols="50"></textarea>
 
             <div class="form__group">
-                <input name="price" type="text" placeholder="Price" class="form__input" />
+                <input name="price" type="text" placeholder="Price" class="form__input price" />
             </div>
                 
             <div class="form__group">
-                <input name="date" type="date" min="new Date().toISOString().split('T')[0]">
+                <input class="date" name="date" type="date">
             </div>
 
             <button class="btn" type="submit">Create advertisement</button>

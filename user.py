@@ -39,6 +39,14 @@ class User:
                 return User(*row)
 
     @staticmethod
+    def find_name_by_id(id):
+        with DB() as db:
+            name = db.execute(
+                'SELECT name FROM users WHERE id = ?',(id,)
+            ).fetchone()
+            return name[0]
+
+    @staticmethod
     def hashPassword(password):
         return hashlib.sha256(password.encode('utf-8')).hexdigest()
 
@@ -59,4 +67,3 @@ class User:
         except BadSignature:
             return False
         return True
-

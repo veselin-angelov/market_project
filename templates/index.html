@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- <link rel="stylesheet" href="style/style.css"> -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <title>Index</title>
 </head>
@@ -24,7 +23,12 @@
         <li class="navbar_li"><a href="#about">About</a></li>
     </ul>
     <!-- end -->
+    {% if token %}
+    <h1>Welcome, {{ username }}</h1>
+    {% endif %}
+    {% if not token %}
     <h1>Welcome</h1>
+    {% endif %}
 
     {% for advertisement in advertisements %}
     <a href="/{{ advertisement.id }}">Title: {{ advertisement.title }} Seller: {{ advertisement.seller_name_by_id(advertisement.seller_id) }}</a>
