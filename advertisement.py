@@ -7,7 +7,7 @@ class Advertisement:
         self.description = description
         self.price = price
         self.date = date
-        self.actice = active
+        self.active = active
         self.buyer_id = buyer_id
         self.seller_id = seller_id
 
@@ -39,18 +39,37 @@ class Advertisement:
     def seller_name_by_id(seller_id):
         with DB() as db:
             name = db.execute(
-                'SELECT name FROM users WHERE seller_id = ?',
+                'SELECT name FROM users WHERE id = ?',
                 (seller_id,)
+            ).fetchone()
+            return name
+
+    @staticmethod
+    def buyer_name_by_id(buyer_id):
+        with DB() as db:
+            name = db.execute(
+                'SELECT name FROM users WHERE id = ?',
+                (buyer_id,)
             ).fetchone()
             return name
 
 
     def create(self):
         with DB() as db:
-            values = (self.title, self.description, self.price, self.date, 1, 0, self.seller_id)
+            values = (self.title, self.description, self.price, self.date, self.active, self.buyer_id, self.seller_id)
             db.execute('''
                 INSERT INTO advertisements (title, description, price, date, active, buyer_id, seller_id)
                 VALUES (?, ?, ?, ?, ?, ?, ?)''', values)
             return self
 
-    
+    def buy(self, buyer_id):
+        with DB() as db:
+            values = (self.id, buyer_id)
+            db.execute('''UPDATE advertisements SET active = 0, buyer_id = ? WHERE id = ?''', values)
+            self.active = 0
+            self.buyer_id = buyer_id
+            return self
+
+    def delete(self):
+        with DB() as db:
+            db.execute('DELETE FROM advertisements WHERE id = ?', (self.id,))

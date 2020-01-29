@@ -7,7 +7,7 @@ from itsdangerous import (
     SignatureExpired
     )
 
-SECRET_KEY = 'q4t7w!z%C*F-J@NcRfUjXn2r5u8x/A?D'
+SECRET_KEY = 'q4t7w!z%C*F-J@/A?D'
 
 class User:
     def __init__(self, id, email, password, name, address, mobile):
@@ -28,12 +28,12 @@ class User:
         	return self
             
     @staticmethod
-    def find(name):
-        if not name:
+    def find(email):
+        if not email:
             return None
         with DB() as db:
             row = db.execute(
-                'SELECT * FROM users WHERE name = ?',(name,)
+                'SELECT * FROM users WHERE email = ?',(email,)
             ).fetchone()
             if row:
                 return User(*row)
@@ -47,7 +47,7 @@ class User:
 
     def generateToken(self):
         s = Serializer(SECRET_KEY, expires_in=600)
-        return s.dumps({'name': self.name})
+        return s.dumps({'email': self.email})
 
     @staticmethod
     def verifyToken(token):

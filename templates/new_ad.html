@@ -14,17 +14,31 @@
     <!-- navbar -->
     <ul class="navbar_ul">
         <li class="navbar_li"><a href="/">Home</a></li>
-        <li class="navbar_li"><a class="active" href="/login">Login</a></li>
-        <li class="navbar_li"><a href="/register">Register</a></li>
+        <!-- <li class="navbar_li"><a href="/login">Login</a></li> -->
+        <!-- <li class="navbar_li"><a href="/register">Register</a></li> -->
         <li class="navbar_li"><a href="#about">About</a></li>
     </ul>
     <!-- end -->
-    <div class="user">
-        <form class="form" action="/login" method="POST">
+    <div class="new_ad">
+        <form class="form" action="/new" method="POST">
             
             <div class="form__group">
-                <input name="email" type="email" placeholder="Email" class="form__input" />
+                <input name="title" type="text" placeholder="Title" class="form__input" />
             </div>
             
             <div class="form__group">
-                <input name="password" type="password" placeholder="Password" class="form__input" />
+                <textarea name="description" placeholder="Description" rows="4" cols="50"></textarea>
+
+            <div class="form__group">
+                <input name="price" type="text" placeholder="Price" class="form__input" />
+            </div>
+                
+            <div class="form__group">
+                <input name="date" type="date" min="new Date().toISOString().split('T')[0]">
+            </div>
+
+            <button class="btn" type="submit">Create advertisement</button>
+        </form>
+    </div>
+</body>
+</html>
