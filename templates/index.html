@@ -31,8 +31,10 @@
     {% endif %}
 
     {% for advertisement in advertisements %}
-    <a href="/{{ advertisement.id }}">Title: {{ advertisement.title }} Seller: {{ advertisement.seller_name_by_id(advertisement.seller_id) }}</a>
-    <br/>
+        {% if advertisement.active == 1 %}
+        <a href="/{{ advertisement.id }}">Title: {{ advertisement.title }} Seller: {{ advertisement.seller_name_by_id(advertisement.seller_id) }}</a>
+        <br/>
+        {% endif %}
     {% endfor %}
 
 </body>

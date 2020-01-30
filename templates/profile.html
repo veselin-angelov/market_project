@@ -20,7 +20,7 @@
     <h1>Welcome to your profile, {{ username }}</h1>
 
     {% for advertisement in advertisements %}
-        <a href="/{{ advertisement.id }}">Title: {{ advertisement.title }} Buyer {{ advertisement.buyer_name_by_id(advertisement.buyer_id) }} </a>
+        <a href="/{{ advertisement.id }}">Title: {{ advertisement.title }} Buyer: {{ advertisement.buyer_name_by_id(advertisement.buyer_id) }} </a>
         <br/>
     {% endfor %}
 
